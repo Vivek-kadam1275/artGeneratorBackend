@@ -30,8 +30,8 @@ export const saveImage= async (req, res) => {
 export const getImages=async(req,res)=>{
     try {
         console.log(req);
-       const userId=req.user.id;
-        const imageData= await Image.find({userId})
+        const userId=req.user.id;
+        const imageData= await Image.find({userId});
         console.log(imageData);
         return res.status(200).json({
             success:true,

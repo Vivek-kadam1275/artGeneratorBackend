@@ -6,7 +6,7 @@ import { v2 as cloudinary } from "cloudinary";
 import { v4 as uuidv4 } from 'uuid';
 export const uploadImageToCloudinary = async (req, res) => {
     try {
-        // console.log(req.body);
+        console.log(req.body);
         const { imageUrl } = req.body;
         // console.log(imageUrl,name,email,tags);
         if (!imageUrl) {
@@ -28,6 +28,7 @@ export const uploadImageToCloudinary = async (req, res) => {
         // Convert to base64 string for Cloudinary
         const base64Image = `data:image/png;base64,${buffer.toString('base64')}`;
 
+        console.log("uploading");
         // Upload to Cloudinary
         const cloudRes = await cloudinary.uploader.upload(base64Image, {
             folder: 'uploadMediaTutorial',
@@ -35,13 +36,7 @@ export const uploadImageToCloudinary = async (req, res) => {
             public_id: uuidv4(),
         });
 
-        // // Store info in DB
-        // await Upload.create({
-        //     name,
-        //     email,
-        //     tags,
-        //     url: cloudRes.secure_url,
-        // });
+        console.log("uploaded..");
 
         return res.status(200).json({
             success: true,
