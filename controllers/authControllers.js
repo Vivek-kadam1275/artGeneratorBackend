@@ -93,7 +93,7 @@ export const login = async (req, res) => {
                     sameSite: 'none'  //  Required for cross-origin cookies
                 }
                 // 
-                res.cookie("loginCookie", token, options).status(200).json({
+                return res.cookie("loginCookie", token, options).status(200).json({
                     success: true,
                     token: token,
                     user: existUser,
