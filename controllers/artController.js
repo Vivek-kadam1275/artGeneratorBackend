@@ -13,13 +13,13 @@ const openai = new OpenAI({
 export const generateDalle = async (req, res) => {
   try {
     const { prompt } = req.body;
-    console.log(prompt);
-    if (!prompt) {
-      return res.status(400).json({ error: "Prompt is required" });
-    }
+    // console.log(prompt);
+    // if (!prompt) {
+    //   return res.status(400).json({ error: "Prompt is required" });
+    // }
 
     const response = await openai.images.generate({
-      prompt,
+      prompt:`${prompt} , digital painting, artistic, high detail, colorful, in the style of fantasy art`,
       n: 1,
       size: "512x512",
     });

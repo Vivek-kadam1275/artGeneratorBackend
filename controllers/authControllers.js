@@ -2,6 +2,8 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import env from "dotenv";
+env.config();
 export const register = async (req, res) => {
     try {
         const { username, email, password } = req.body;
@@ -70,7 +72,7 @@ export const login = async (req, res) => {
             if (pass) {
                 // create jwt token (payload-data,secretkey,optional)
                 console.log("creating jwt token")
-                const token = jwt.sign(payload, "secretVivek", {
+                const token = jwt.sign(payload, process.env.jwt_secret, {
                     expiresIn: "24h"
                 });
                 // console.log(existUser)
@@ -85,7 +87,7 @@ export const login = async (req, res) => {
 
 
                 // create cookie
-
+ 
                 const options = {
                     expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
                     httpOnly: true,
@@ -134,7 +136,7 @@ export const verify = async (req, res) => {
     console.log(token);
     if (!token) return res.status(401).json({ error: "Unauthorized", success: false });
 
-    jwt.verify(token, "secretVivek", (err, decoded) => {
+    jwt.verify(token, process.env.jwt_secret, (err, decoded) => {
         if (err) return res.status(403).json({ error: "Token expired", success: false });
         res.json({
             success: true,

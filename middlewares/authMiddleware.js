@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
-
+import env from "dotenv";
+env.config();
 export const auth = async (req, res, next) => {
 
     try {
@@ -22,7 +23,7 @@ export const auth = async (req, res, next) => {
 
         // convert that token into information
         try {
-            const payload = jwt.verify(token, "secretVivek");
+            const payload = jwt.verify(token, process.env.jwt_secret);
             // console.log(payload);
 
             req.user = payload;
