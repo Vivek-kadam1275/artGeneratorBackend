@@ -18,7 +18,7 @@ app.use(express.json());
 
 app.use(cookieParser());
 
-const allowedOrigins = ["http://localhost:5173","http://localhost:5174","https://modern-arter.netlify.app/"];
+const allowedOrigins = ["http://localhost:5173","http://localhost:5174","https://modern-arter.netlify.app"];
 
 app.use(cors({
     origin: allowedOrigins,
