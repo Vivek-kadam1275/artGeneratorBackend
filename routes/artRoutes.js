@@ -1,5 +1,5 @@
 import express from "express";
-import { generateScribble, getImages, saveImage } from "../controllers/artController.js";
+import { generateDalle, generateScribble, getImages, saveImage } from "../controllers/artController.js";
 import { auth } from "../middlewares/authMiddleware.js";
 const router = express.Router();
 
@@ -11,7 +11,9 @@ router.get('/getImages', auth, getImages);
 
 
 
+router.post("/dalle",generateDalle);
 router.post("/scribble",generateScribble);
+
 
 
 // router.post("/test-scribble", async (req, res) => {

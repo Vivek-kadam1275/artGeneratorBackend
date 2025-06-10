@@ -1,57 +1,90 @@
 
 import Image from "../models/imageModel.js";
 import Replicate from "replicate";
-
+import OpenAI from "openai";
 import env from "dotenv";
 env.config();
 
-export const saveImage= async (req, res) => {
-    try {
-        // console.log("into saveImage")
-       
-        const {imageUrl,prompt}=req.body;
-        const userId=req.user.id;
-        const storeImage=await Image.create({
-            imageUrl,prompt,userId
-        })
 
-        return res.status(200).json({
-            success:true,
-            message:"image stored in db successfully",
-            data:storeImage,
-        })
-        
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
-    } catch (error) {
-        console.log(error);
-        return res.json({
-            success: false,
-            message: "error in inserting image to database",
-
-        });
+export const generateDalle = async (req, res) => {
+  try {
+    const { prompt } = req.body;
+    console.log(prompt);
+    if (!prompt) {
+      return res.status(400).json({ error: "Prompt is required" });
     }
+
+    const response = await openai.images.generate({
+      prompt,
+      n: 1,
+      size: "512x512",
+    });
+
+    const imageUrl = response.data[0].url;
+    return res.status(200).json({
+      success: true, imageUrl:imageUrl, message: "image generated successfully"
+    });
+  } catch (error) {
+
+    console.log("Error in dalle controller");
+    console.error("OpenAI error:", error.response?.data || error.message);
+    return res.status(500).json({ error: "Image generation failed, try again" });
+  }
 }
 
-export const getImages=async(req,res)=>{
-    try {
-        // console.log(req);
-        const userId=req.user.id;
-        const imageData= await Image.find({userId});
-        // console.log(imageData);
-        return res.status(200).json({
-            success:true,
-            message:"images fetched successfully",
-            data:imageData,
-        })
 
-    } catch (error) {
-        console.log(error);
-        return res.json({
-            success: false,
-            message: "error in inserting image to database",
 
-        });
-    }
+export const saveImage = async (req, res) => {
+  try {
+    // console.log("into saveImage")
+
+    const { imageUrl, prompt } = req.body;
+    const userId = req.user.id;
+    const storeImage = await Image.create({
+      imageUrl, prompt, userId
+    })
+
+    return res.status(200).json({
+      success: true,
+      message: "image stored in db successfully",
+      data: storeImage,
+    })
+
+
+  } catch (error) {
+    console.log(error);
+    return res.json({
+      success: false,
+      message: "error in inserting image to database",
+
+    });
+  }
+}
+
+export const getImages = async (req, res) => {
+  try {
+    // console.log(req);
+    const userId = req.user.id;
+    const imageData = await Image.find({ userId });
+    // console.log(imageData);
+    return res.status(200).json({
+      success: true,
+      message: "images fetched successfully",
+      data: imageData,
+    })
+
+  } catch (error) {
+    console.log(error);
+    return res.json({
+      success: false,
+      message: "error in inserting image to database",
+
+    });
+  }
 }
 
 
@@ -59,10 +92,10 @@ export const getImages=async(req,res)=>{
 const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN,
 });
-export const generateScribble=async(req,res)=>{
-    try {
+export const generateScribble = async (req, res) => {
+  try {
     const { prompt, scribble } = req.body;
-    // console.log(prompt,scribble);
+    console.log(prompt,scribble);
 
     if (!prompt || !scribble) {
       return res.status(400).json({ error: "Prompt and scribble are required" });
