@@ -33,6 +33,12 @@ app.get("/",(req,res)=>{
     res.send("This is home page")
 })
 
+app.get("/my-ip", async (req, res) => {
+  const ip = await fetch("https://ifconfig.me").then(r => r.text());
+  res.send(`Your server IP is: ${ip}`);
+});
+
+
 cloudinaryConnect();
 dbConnect().then(() => {
     app.listen(port,()=>{

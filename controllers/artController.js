@@ -93,9 +93,8 @@ const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN,
   headers: {
     "User-Agent":
-      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
-      "AppleWebKit/537.36 (KHTML, like Gecko) " +
-      "Chrome/114.0.0.0 Safari/537.36",
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+    "Content-Type": "application/json",
   },
 });
 export const generateScribble = async (req, res) => {
@@ -145,12 +144,12 @@ export const generateScribble = async (req, res) => {
 }
 
 
-export const testScribble= async (req, res) => {
+export const testScribble = async (req, res) => {
   const testPrompt = "a colorful turtle";
   const testScribble =
     "https://replicate.delivery/pbxt/IJE6zP4jtdwxe7SffC7te9DPHWHW99dMXED5AWamlBNcvxn0/user_1.png";
 
-    console.log(testPrompt);
+  console.log(testPrompt);
   try {
     const output = await replicate.run(
       "jagilley/controlnet-scribble:435061a1b5a4c1e26740464bf786efdfa9cb3a3ac488595a2de23e143fdb0117",
