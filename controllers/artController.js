@@ -19,14 +19,14 @@ export const generateDalle = async (req, res) => {
     // }
 
     const response = await openai.images.generate({
-      prompt:`${prompt} , digital painting, artistic, high detail, colorful, in the style of fantasy art`,
+      prompt: `${prompt} , digital painting, artistic, high detail, colorful, in the style of fantasy art`,
       n: 1,
       size: "512x512",
     });
 
     const imageUrl = response.data[0].url;
     return res.status(200).json({
-      success: true, imageUrl:imageUrl, message: "image generated successfully"
+      success: true, imageUrl: imageUrl, message: "image generated successfully"
     });
   } catch (error) {
 
@@ -91,11 +91,17 @@ export const getImages = async (req, res) => {
 
 const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN,
+  headers: {
+    "User-Agent":
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
+      "AppleWebKit/537.36 (KHTML, like Gecko) " +
+      "Chrome/114.0.0.0 Safari/537.36",
+  },
 });
 export const generateScribble = async (req, res) => {
   try {
     const { prompt, scribble } = req.body;
-    console.log(prompt,scribble);
+    console.log(prompt, scribble);
 
     if (!prompt || !scribble) {
       return res.status(400).json({ error: "Prompt and scribble are required" });
