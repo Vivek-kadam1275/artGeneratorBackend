@@ -88,6 +88,26 @@ export const getImages = async (req, res) => {
 }
 
 
+export const getUserDetails=async(req,res)=>{
+  try {
+    // console.log("printing userdetails",req.user);
+    const user={
+      name:req.user.name,
+      email:req.user.email,
+
+    }
+
+    return res.status(200).json({
+      success:true,
+      message:"details retrieved successfully",
+      data:user,
+    })
+  } catch (error) {
+    console.log("error",error);
+    return res.status(400);
+  }
+}
+
 
 const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN,

@@ -1,9 +1,10 @@
 import express from "express";
-import { generateDalle, generateScribble, getImages, saveImage, testScribble } from "../controllers/artController.js";
+import { generateDalle, generateScribble, getImages, getUserDetails, saveImage, testScribble } from "../controllers/artController.js";
 import { auth } from "../middlewares/authMiddleware.js";
 const router = express.Router();
 
 
+router.get("/getUserDetails",auth,getUserDetails);
 
 router.post('/saveImage', auth, saveImage);
 router.get('/getImages', auth, getImages);
