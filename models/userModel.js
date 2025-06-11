@@ -1,37 +1,40 @@
- import mongoose, { model } from "mongoose";
+import mongoose, { model } from "mongoose";
 
-const userSchema=new mongoose.Schema({
-    username:{
-        type:String,
-        required:true,
-        trim:true,
-        unique:true,
-        min:3,
-        max:20,
+const userSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        required: true,
+        trim: true,
+        unique: true,
+        min: 3,
+        max: 20,
     },
-    email:{
-        type:String,
-        required:true,
-        trim:true,
-        unique:true,
-        max:50,
+    email: {
+        type: String,
+        required: true,
+        trim: true,
+        unique: true,
+        max: 50,
     },
-    password:{
-        type:String,
-        required:true,
-        trim:true,
-        min:8,
-        
-        
+    password: {
+        type: String,
+        required: true,
+        trim: true,
+        min: 8,
+
+
     },
-    isAvatarSet:{
-        type:Boolean,
-        default:false,
+    isAvatarSet: {
+        type: Boolean,
+        default: false,
     },
-    avatarImage:{
-        type:String,
-        default:"",
-    }
+    avatarImage: {
+        type: String,
+        default: "",
+    },
+    resetPasswordToken: { type: String,default:"" },
+
+    resetPasswordExpires: { type: Date , default:""},
 })
 
-export default mongoose.model("User",userSchema);
+export default mongoose.model("User", userSchema);
